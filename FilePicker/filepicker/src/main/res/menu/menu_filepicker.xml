@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".FilePicker">
+
+    <item android:id="@+id/group_order_by"
+        android:title="@string/menu_order_by"
+        android:icon="@android:drawable/arrow_up_float"
+        android:orderInCategory="200"
+        android:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/action_order_by_name_asc"
+                android:title="@string/menu_order_by_name"
+                android:icon="@android:drawable/arrow_up_float" />
+            <item
+                android:id="@+id/action_order_by_name_desc"
+                android:title="@string/menu_order_by_name"
+                android:icon="@android:drawable/arrow_down_float" />
+            <item
+                android:id="@+id/action_order_by_mimetype_asc"
+                android:title="@string/menu_order_by_mimetype"
+                android:icon="@android:drawable/arrow_up_float" />
+            <item
+                android:id="@+id/action_order_by_mimetype_desc"
+                android:title="@string/menu_order_by_mimetype"
+                android:icon="@android:drawable/arrow_down_float" />
+            <item
+                android:id="@+id/action_order_by_size_asc"
+                android:title="@string/menu_order_by_size"
+                android:icon="@android:drawable/arrow_up_float" />
+            <item
+                android:id="@+id/action_order_by_size_desc"
+                android:title="@string/menu_order_by_size"
+                android:icon="@android:drawable/arrow_down_float" />
+        </menu>
+    </item>
+</menu>

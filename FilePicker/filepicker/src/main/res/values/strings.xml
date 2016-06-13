@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="file_picker_title">File Picker</string>
+    <string name="ok_button_text">OK</string>
+    <string name="cancel_button_text">Cancel</string>
+
+    <string name="select_button_text">Select %1d documents</string>
+
+    <string name="placeholder_text">Text</string>
+
+    <string name="size_text">Size: %s</string>
+
+    <string name="create_dir_fragment_title">New folder name</string>
+
+    <string name="menu_create_folder">Create a folder</string>
+    <string name="menu_order_by">Order</string>
+    <string name="menu_order_by_name">Order by name</string>
+    <string name="menu_order_by_mimetype">Order by type</string>
+    <string name="menu_order_by_size">Order by size</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="file_picker_title">Sélecteur de fichier</string>
+    <string name="ok_button_text">OK</string>
+    <string name="cancel_button_text">Annuler</string>
+
+    <string name="select_button_text">Selectionner %1d documents</string>
+
+    <string name="placeholder_text">Texte</string>
+
+    <string name="size_text">Taille: %s</string>
+
+    <string name="create_dir_fragment_title">Nom du nouveau dossier</string>
+
+    <string name="menu_order_by">Trier</string>
+    <string name="menu_order_by_name">Trier par nom</string>
+    <string name="menu_order_by_mimetype">Trier par type</string>
+    <string name="menu_order_by_size">Trier par taille</string>
+</resources>
