@@ -22,7 +22,7 @@ compile "fr.petrus.tools:filepicker:0.9.7@aar"
 ```java
 Intent intent = new Intent(this, FilePicker.class);
 intent.putExtra(FilePicker.INTENT_PARAM_TITLE, "The title displayed in the file picker");
-intent.putExtra(FilePicker.INTENT_PARAM_ROOT_DIR, "/the/starting/path);
+intent.putExtra(FilePicker.INTENT_PARAM_ROOT_DIR, "/the/starting/path");
 intent.putExtra(FilePicker.INTENT_PARAM_MIME_TYPE_FILTER, "*/*"); // if you want to select audio files only : "audio/*"
 intent.putExtra(FilePicker.INTENT_PARAM_SELECTION_MODE, FilePicker.SELECTION_MODE_SINGLE_FILE);
 startActivityForResult(intent, 42); // the requestCode used to get the results (see below)
@@ -31,7 +31,7 @@ startActivityForResult(intent, 42); // the requestCode used to get the results (
 ```java
 Intent intent = new Intent(this, FilePicker.class);
 intent.putExtra(FilePicker.INTENT_PARAM_TITLE, "The title displayed in the file picker");
-intent.putExtra(FilePicker.INTENT_PARAM_ROOT_DIR, "/the/starting/path);
+intent.putExtra(FilePicker.INTENT_PARAM_ROOT_DIR, "/the/starting/path");
 intent.putExtra(FilePicker.INTENT_PARAM_MIME_TYPE_FILTER, "*/*"); // if you want to select audio files only : "audio/*"
 intent.putExtra(FilePicker.INTENT_PARAM_SELECTION_MODE, FilePicker.SELECTION_MODE_MULTIPLE);
 startActivityForResult(intent, 42); // the requestCode used to get the results (see below) 
@@ -40,7 +40,7 @@ startActivityForResult(intent, 42); // the requestCode used to get the results (
 ```java
 Intent intent = new Intent(this, FilePicker.class);
 intent.putExtra(FilePicker.INTENT_PARAM_TITLE, "The title displayed in the file picker");
-intent.putExtra(FilePicker.INTENT_PARAM_ROOT_DIR, "/the/starting/path);
+intent.putExtra(FilePicker.INTENT_PARAM_ROOT_DIR, "/the/starting/path");
 intent.putExtra(FilePicker.INTENT_PARAM_MIME_TYPE_FILTER, "*/*"); // if you want to select audio files only : "audio/*"
 intent.putExtra(FilePicker.INTENT_PARAM_SELECTION_MODE, FilePicker.SELECTION_MODE_MULTIPLE_RECURSIVE);
 startActivityForResult(intent, 42); // the requestCode used to get the results (see below) 
@@ -49,7 +49,7 @@ startActivityForResult(intent, 42); // the requestCode used to get the results (
 ```java
 Intent intent = new Intent(this, FilePicker.class);
 intent.putExtra(FilePicker.INTENT_PARAM_TITLE, "The title displayed in the file picker");
-intent.putExtra(FilePicker.INTENT_PARAM_ROOT_DIR, "/the/starting/path);
+intent.putExtra(FilePicker.INTENT_PARAM_ROOT_DIR, "/the/starting/path");
 intent.putExtra(FilePicker.INTENT_PARAM_SELECTION_MODE, FilePicker.SELECTION_MODE_SINGLE_DIR);
 startActivityForResult(intent, 42); // the requestCode used to get the results (see below)
 ```
