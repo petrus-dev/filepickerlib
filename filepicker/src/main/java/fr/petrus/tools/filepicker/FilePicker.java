@@ -41,6 +41,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +49,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -238,13 +240,6 @@ public class FilePicker extends Activity implements CreateDirDialogFragment.Dial
                 onClickFile(id);
             }
         });
-        filesListView.setOnItemLongClickListener(new ListView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                onLongClickFile(id);
-                return true;
-            }
-        });
 
         currentFolderCursor = getFileCursorByParentPath(currentPath, orderBy);
         filesCursorAdapter = new FileCursorAdapter(this, currentFolderCursor);
@@ -404,28 +399,8 @@ public class FilePicker extends Activity implements CreateDirDialogFragment.Dial
                         break;
                 }
                 currentPath = item.getPath();
-                updateFilesList();
                 updateHeader();
-            } else {
-                toggleSelection(item.getPath());
-            }
-        }
-    }
-
-    private void onLongClickFile(long id) {
-        DirectoryItem item = findItemById(currentFolderCursor, id);
-        if (null != item) {
-            if (item.isDir()) {
-                switch (selectionMode) {
-                    case SELECTION_MODE_SINGLE_FILE:
-                        onClickFile(id);
-                        break;
-                    case SELECTION_MODE_SINGLE_DIR:
-                    case SELECTION_MODE_MULTIPLE:
-                    case SELECTION_MODE_MULTIPLE_RECURSIVE:
-                        toggleSelection(item.getPath());
-                        break;
-                }
+                updateFilesList();
             } else {
                 toggleSelection(item.getPath());
             }
@@ -516,7 +491,6 @@ public class FilePicker extends Activity implements CreateDirDialogFragment.Dial
                 selection.clear();
                 selection.add(path);
                 updateSelectedText();
-                updateFilesList();
                 break;
             case SELECTION_MODE_MULTIPLE: {
                 showProgress(true);
@@ -539,7 +513,6 @@ public class FilePicker extends Activity implements CreateDirDialogFragment.Dial
             case SELECTION_MODE_SINGLE_DIR:
                 selection.remove(path);
                 updateSelectedText();
-                updateFilesList();
                 break;
             case SELECTION_MODE_MULTIPLE: {
                 showProgress(true);
@@ -660,34 +633,45 @@ public class FilePicker extends Activity implements CreateDirDialogFragment.Dial
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            DirectoryItem item = cursorToItem(cursor);
+            final DirectoryItem item = cursorToItem(cursor);
 
             if (null==item) {
                 return;
             }
 
+            CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
             ImageView icon = (ImageView) view.findViewById(R.id.icon);
             TextView textViewName = (TextView) view.findViewById(R.id.name_text);
             TextView textViewLeft = (TextView) view.findViewById(R.id.left_text);
             TextView textViewRight = (TextView) view.findViewById(R.id.right_text);
 
+            switch (selectionMode) {
+                case SELECTION_MODE_SINGLE_DIR:
+                case SELECTION_MODE_SINGLE_FILE:
+                    checkBox.setVisibility(View.GONE);
+                    break;
+                case SELECTION_MODE_MULTIPLE:
+                case SELECTION_MODE_MULTIPLE_RECURSIVE:
+                    checkBox.setVisibility(View.VISIBLE);
+                    checkBox.setChecked(isSelected(item.getPath()));
+                    checkBox.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            toggleSelection(item.getPath());
+                        }
+                    });
+                    break;
+            }
+
             textViewName.setText(item.getName());
 
             if (item.isDir()) {
-                if (isSelected(item.getPath())) {
-                    icon.setImageResource(R.drawable.ic_folder_selected);
-                } else {
-                    icon.setImageResource(R.drawable.ic_folder);
-                }
+                icon.setImageResource(R.drawable.ic_folder);
                 textViewLeft.setVisibility(View.GONE);
                 textViewRight.setVisibility(View.GONE);
                 textViewRight.setVisibility(View.GONE);
             } else {
-                if (isSelected(item.getPath())) {
-                    icon.setImageResource(R.drawable.ic_file_selected);
-                } else {
-                    icon.setImageResource(R.drawable.ic_file);
-                }
+                icon.setImageResource(R.drawable.ic_file);
                 textViewLeft.setVisibility(View.VISIBLE);
                 textViewLeft.setText(item.getMimeType());
 
