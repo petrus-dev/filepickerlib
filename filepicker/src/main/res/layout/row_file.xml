@@ -9,14 +9,12 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center_vertical" />
+        android:layout_height="fill_parent" />
 
     <ImageView
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:gravity="center_vertical"
         android:layout_marginEnd="6dip"
         android:src="@drawable/ic_file" />
 
