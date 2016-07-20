@@ -35,7 +35,7 @@
 
 apply plugin: 'com.android.library'
 
-def appVersion = [ 0, 9, 9 ];
+def appVersion = [ 0, 10, 0 ];
 
 def appVersionCode = 1000000 * appVersion[0] + 1000 * appVersion[1] + appVersion[2]
 def appVersionName = "${appVersion[0]}.${appVersion[1]}.${appVersion[2]}"
@@ -43,12 +43,12 @@ def appVersionName = "${appVersion[0]}.${appVersion[1]}.${appVersion[2]}"
 def eventBusVersion = "3.0.0"
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode appVersionCode
         versionName appVersionName
     }
