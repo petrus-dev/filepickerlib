@@ -35,7 +35,7 @@
 
 apply plugin: 'com.android.library'
 
-def appVersion = [ 0, 10, 0 ];
+def appVersion = [ 0, 11, 0 ];
 
 def appVersionCode = 1000000 * appVersion[0] + 1000 * appVersion[1] + appVersion[2]
 def appVersionName = "${appVersion[0]}.${appVersion[1]}.${appVersion[2]}"
