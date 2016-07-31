@@ -40,8 +40,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,7 +53,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CursorAdapter;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -138,9 +143,9 @@ public class FilePicker extends Activity implements CreateDirDialogFragment.Dial
     private Cursor currentFolderCursor;
     private HashSet<String> selection;
 
-    private ImageView backToParent;
-    private TextView folderName;
-    private TextView parentPath;
+    private HorizontalScrollView foldersScrollView;
+    private LinearLayout parentPathLayout;
+    private Button currentFolderButton;
     private ProgressBar progressBar;
     private Button okButton;
 
@@ -183,16 +188,11 @@ public class FilePicker extends Activity implements CreateDirDialogFragment.Dial
         if (null != title) {
             setTitle(title);
         }
-        backToParent = (ImageView) findViewById(R.id.parent);
-        folderName = (TextView) findViewById(R.id.folder_name);
-        parentPath = (TextView) findViewById(R.id.parent_path);
-        RelativeLayout header = (RelativeLayout) findViewById(R.id.header);
-        header.setOnClickListener(new RelativeLayout.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackToParent();
-            }
-        });
+
+        foldersScrollView = (HorizontalScrollView) findViewById(R.id.folders_scrollview);
+        parentPathLayout = (LinearLayout) findViewById(R.id.parent_path_layout);
+        currentFolderButton = (Button) findViewById(R.id.current_folder_button);
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         okButton = (Button) findViewById(R.id.ok_button);
         okButton.setOnClickListener(new Button.OnClickListener() {
@@ -424,24 +424,65 @@ public class FilePicker extends Activity implements CreateDirDialogFragment.Dial
             return false;
         }
         File file = new File(currentPath);
-        currentPath = file.getParent();
-        updateFilesList();
-        updateHeader();
+        goToFolder(file.getParent());
         return true;
     }
 
+    private void goToFolder(String path) {
+        currentPath = path;
+        updateFilesList();
+        updateHeader();
+    }
+
     private void updateHeader() {
+        parentPathLayout.removeAllViews();
         if (currentPath.equals("/")) {
-            folderName.setText("/");
-            parentPath.setVisibility(View.GONE);
-            backToParent.setVisibility(View.GONE);
+            currentFolderButton.setText(currentPath);
         } else {
             File file = new File(currentPath);
-            folderName.setText(file.getName());
-            parentPath.setText(file.getParent());
-            parentPath.setVisibility(View.VISIBLE);
-            backToParent.setVisibility(View.VISIBLE);
+            currentFolderButton.setText(file.getName());
+            FrameLayout.LayoutParams nextIconLayoutParams = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    Gravity.CENTER_VERTICAL);
+
+            List<File> parents = FileUtils.getParents(file);
+            for (final File folder : parents) {
+                Button button = new Button(this);
+                if (Build.VERSION.SDK_INT >= 23) {
+                    button.setTextAppearance(android.R.style.TextAppearance_Small);
+                } else {
+                    button.setTextAppearance(this, android.R.style.TextAppearance_Small);
+                }
+                button.setTransformationMethod(null);
+                String folderName = folder.getName();
+                if (null==folderName || folderName.isEmpty()) {
+                    folderName = "/";
+                }
+                button.setText(folderName);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        goToFolder(folder.getAbsolutePath());
+                        updateHeader();
+                    }
+                });
+                parentPathLayout.addView(button);
+
+                ImageView nextIcon = new ImageView(this);
+                nextIcon.setLayoutParams(nextIconLayoutParams);
+                nextIcon.setImageResource(R.drawable.ic_next);
+                parentPathLayout.addView(nextIcon);
+            }
         }
+
+        foldersScrollView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+                foldersScrollView.removeOnLayoutChangeListener(this);
+                foldersScrollView.fullScroll(View.FOCUS_RIGHT);
+            }
+        });
     }
 
     private void updateSelectedText() {
