@@ -37,6 +37,10 @@ package fr.petrus.tools.filepicker;
 
 import android.webkit.MimeTypeMap;
 
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * The FileUtils class provides some static methods related to File MIME type.
  *
@@ -88,5 +92,20 @@ public class FileUtils {
             }
         }
         return true;
+    }
+
+    /**
+     * Returns the parent folders of this file, starting from the root.
+     *
+     * @return the parent folders of this file, starting from the root
+     */
+    public static List<File> getParents(File file) {
+        LinkedList<File> parents = new LinkedList<>();
+        File parent = file.getParentFile();
+        while (null!=parent) {
+            parents.addFirst(parent);
+            parent = parent.getParentFile();
+        }
+        return parents;
     }
 }
