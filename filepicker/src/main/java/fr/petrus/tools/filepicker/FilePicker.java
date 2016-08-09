@@ -471,7 +471,7 @@ public class FilePicker extends Activity implements CreateDirDialogFragment.Dial
 
                 ImageView nextIcon = new ImageView(this);
                 nextIcon.setLayoutParams(nextIconLayoutParams);
-                nextIcon.setImageResource(R.drawable.ic_next);
+                nextIcon.setImageResource(R.drawable.ic_next_black_24dp);
                 parentPathLayout.addView(nextIcon);
             }
         }
@@ -707,12 +707,12 @@ public class FilePicker extends Activity implements CreateDirDialogFragment.Dial
             textViewName.setText(item.getName());
 
             if (item.isDir()) {
-                icon.setImageResource(R.drawable.ic_folder);
+                icon.setImageResource(R.drawable.ic_folder_black_36dp);
                 textViewLeft.setVisibility(View.GONE);
                 textViewRight.setVisibility(View.GONE);
                 textViewRight.setVisibility(View.GONE);
             } else {
-                icon.setImageResource(R.drawable.ic_file);
+                icon.setImageResource(R.drawable.ic_file_black_36dp);
                 textViewLeft.setVisibility(View.VISIBLE);
                 textViewLeft.setText(item.getMimeType());
 

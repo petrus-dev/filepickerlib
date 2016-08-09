@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_marginEnd="6dip"
-        android:src="@drawable/ic_file" />
+        android:src="@drawable/ic_file_black_36dp" />
 
     <RelativeLayout
         android:orientation="vertical"
